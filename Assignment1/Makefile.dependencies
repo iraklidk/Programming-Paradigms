@@ -1,0 +1,7 @@
+-g
+-Wall
+-MM
+rsg.cc
+random.cc
+production.cc
+definition.cc
