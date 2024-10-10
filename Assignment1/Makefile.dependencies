@@ -1,7 +1,4 @@
--g
--Wall
--MM
-rsg.cc
-random.cc
-production.cc
-definition.cc
+rsg.o: rsg.cc definition.h production.h
+random.o: random.cc random.h
+production.o: production.cc production.h
+definition.o: definition.cc definition.h production.h random.h

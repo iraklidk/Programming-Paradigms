@@ -39,6 +39,26 @@ static void readGrammar(ifstream& infile, map<string, Definition>& grammar)
   }
 }
 
+void coutVec(vector<string>& toPrint, int k) {
+  cout << "Version #" << k << endl;
+
+  for (size_t i = 0; i < toPrint.size(); i++) {
+    cout << toPrint[i] << " ";
+  }
+
+  cout << endl;
+}
+
+void genToPrint(vector<string>& toPrint, map<string, Definition>& grammar, string someNonTerminal) {
+  Production prod = grammar[someNonTerminal].getRandomProduction();
+  for(Production::iterator curr = prod.begin(); curr != prod.end(); ++curr) {
+    string str = *curr;
+    if(str[0] == '<')
+      genToPrint(toPrint, grammar, str);
+    else toPrint.push_back(str);
+  }
+}
+
 /**
  * Performs the rudimentary error checking needed to confirm that
  * the client provided a grammar file.  It then continues to
@@ -74,8 +94,12 @@ int main(int argc, char *argv[])
   readGrammar(grammarFile, grammar);
   cout << "The grammar file called \"" << argv[1] << "\" contains "
        << grammar.size() << " definitions." << endl;
-  cout << "1" << endl;
-  cout << "1" << endl;
-  
+  for(int k = 1; k <= 3; k++) {
+    string start = "<start>";
+    vector<string> toPrint;
+    genToPrint(toPrint, grammar, start);
+    coutVec(toPrint, k);
+  }
+
   return 0;
 }
